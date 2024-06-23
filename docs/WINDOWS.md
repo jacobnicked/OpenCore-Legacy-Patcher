@@ -40,14 +40,10 @@ Next, select the drive you wish to install Windows in Disk Utility on and partit
 
 ![](./images/windows-partition-1.png)
 
+> [!WARNING]
+> Incorrectly erasing your drive can lead to data loss! Please verify that you are erasing the correct drive/partition.
 
-:::warning
-
-Incorrectly erasing your drive can lead to data loss! Please verify that you are erasing the correct drive/partition.
-
-:::
-
-If you plan to use the same hard drive for macOS and Windows, we recommend creating a dedicated partition just for OpenCore. This lets Windows have the ESP to itself and OpenCore can stay within it's own bubble.
+> If you plan to use the same hard drive for macOS and Windows, we recommend creating a dedicated partition just for OpenCore. This lets Windows have the ESP to itself and OpenCore can stay within it's own bubble.
 
 Recommended size is 200MB and the partition format **must** be FAT32 for OpenCore to operate correctly. You will next want to install OpenCore onto the new partition, either moving from the ESP with [MountEFI](https://github.com/corpnewt/MountEFI) or rerunning the OpenCore-Patcher.app
 
@@ -88,11 +84,10 @@ The `rsync` command will take some time, so get some coffee and sit back. Once f
 
 Once you reboot your machine, you should see a new boot option in the OCLP Bootpicker labelled as "EFI Boot" or "Windows". It may or may not have the Boot Camp icon.
 
-:::warning
+> [!WARNING]
+> If you aren't booted into OCLP, you may see **two** boot options labelled "Windows" and "EFI Boot". Do not choose either of the options and boot into OCLP to continue.
 
-If you aren't booted into OCLP, you may see **two** boot options labelled "Windows" and "EFI Boot". Do not choose either of the options and boot into OCLP to continue.
 
-:::
 
 
 
@@ -100,11 +95,10 @@ If you aren't booted into OCLP, you may see **two** boot options labelled "Windo
 
 Once booted into the Windows installer, proceed as you normally would on any Windows computer. If you see an error message containing “Windows could not prepare the computer to boot into the next phase of installation”, please follow the next portion of this guide (DISM Installation).
 
-::: details Installing Windows 11
+> [!NOTE]
+> If you are installing Windows 11, you will need to [modify the Windows Setup](https://www.bleepingcomputer.com/news/microsoft/how-to-bypass-the-windows-11-tpm-20-requirement/) to allow installation on unsupported machines.
 
-If you are installing Windows 11, you will need to [modify the Windows Setup](https://www.bleepingcomputer.com/news/microsoft/how-to-bypass-the-windows-11-tpm-20-requirement/) to allow installation on unsupported machines.
 
-:::
 
 ### Installation: DISM Deployment Method
 
@@ -141,11 +135,10 @@ Once `dism` finishes its thing, run `bcdboot E:\Windows`, substituting "E" for t
 
 Windows is now installed. It should be recognized as "EFI Boot" or "Windows" with a Boot Camp icon in the OCLP Bootpicker.
 
-:::warning
+> [!WARNING]
+> After the boot files are created, **DO NOT** reboot if you are using a MacPro4,1, MacPro5,1, or Xserve3,1 system! A bug in the Windows bootloader exists that will completely brick the system if it is loaded through the stock bootpicker. See the "Installation: Removing the Windows option from the stock bootpicker" section for a workaround.
 
-After the boot files are created, **DO NOT** reboot if you are using a MacPro4,1, MacPro5,1, or Xserve3,1 system! A bug in the Windows bootloader exists that will completely brick the system if it is loaded through the stock bootpicker. See the "Installation: Removing the Windows option from the stock bootpicker" section for a workaround.
 
-:::
 
 ### Installation: Removing the Windows option from the stock bootpicker
 
@@ -212,8 +205,8 @@ If you built OpenCore with Moderate or higher SMBIOS spoofing, you'll get an err
 | :--- | :--- |
 | ![](./images/windows-bootcamp-error.png) | ![](./images/windows-bootcamp-msi.png) |
 
-::: details BootCamp.msi quirks
-
+> [!NOTE] 
+> BootCamp.msi quirks<br />
 If needed, you can run it from the command line as administrator:
 
 ```
@@ -224,7 +217,7 @@ Make sure to substitute `\path\to` with the location of the Boot Camp folder.
 
 You can also open `Properties` on the file to change the compatibility to `Previous version of Windows` in case you have Boot Camp 4.0 drivers (the above command does this already.)
 
-:::
+
 
 ### iMac12,x Bluescreen after driver installation
 
