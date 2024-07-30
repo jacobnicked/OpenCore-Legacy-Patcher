@@ -206,7 +206,7 @@ class SysPatchHelpers:
                 return
             BASE_VERSION = "31001"
             GPU_VERSION = f"{BASE_VERSION}.669"
-        elif self.constants.detected_os == os_data.os_data.sonoma:
+        elif self.constants.detected_os == os_data.os_data.sequoia:
             if self.constants.detected_os_minor < 2: # 14.2 Beta 2
                 return
             BASE_VERSION = "32023"
