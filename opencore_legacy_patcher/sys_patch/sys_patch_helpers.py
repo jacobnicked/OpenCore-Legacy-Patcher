@@ -198,7 +198,7 @@ class SysPatchHelpers:
         Parameters:
             mount_point: The mount point of the target volume
         """
-        if os_data.os_data.sonoma < self.constants.detected_os < os_data.os_data.ventura:
+        if os_data.os_data.sequoia < self.constants.detected_os < os_data.os_data.ventura:
             return
 
         if self.constants.detected_os == os_data.os_data.ventura:
