@@ -202,7 +202,7 @@ class DetectRootPatch:
                                 if self.model == "MacBookPro13,3":
                                     self.legacy_gcn = True
                                 elif self.model == "MacBookPro14,3":
-                                    if self.os_major < os_data.os_data.sonoma:
+                                    if self.os_major < os_data.os_data.sequoia:
                                         continue
                                     self.legacy_gcn_v2 = True
                         else:
@@ -301,7 +301,7 @@ class DetectRootPatch:
         """
 
         # Increase OS check if modern wifi is detected
-        if self.os_major < (os_data.os_data.ventura if self.legacy_wifi is True else os_data.os_data.sonoma):
+        if self.os_major < (os_data.os_data.ventura if self.legacy_wifi is True else os_data.os_data.sequoia):
             return
         if self.legacy_wifi is False and self.modern_wifi is False:
             return
@@ -342,7 +342,7 @@ class DetectRootPatch:
         self.legacy_keyboard_backlight = False
 
         # Currently all graphics patches require a KDK
-        if self.os_major >= os_data.os_data.sonoma:
+        if self.os_major >= os_data.os_data.sequoia:
             self.kepler_gpu     = False
             self.ivy_gpu        = False
             self.haswell_gpu    = False
@@ -568,7 +568,7 @@ class DetectRootPatch:
 
         self.has_network = network_handler.NetworkUtilities().verify_network_connection()
 
-        if self.os_major >= os_data.os_data.sonoma:
+        if self.os_major >= os_data.os_data.sequoia:
             self.legacy_pcie_webcam = self.constants.computer.pcie_webcam
             self.legacy_t1_chip = self.constants.computer.t1_chip
 
