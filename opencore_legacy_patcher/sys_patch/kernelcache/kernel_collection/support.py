@@ -8,6 +8,8 @@ import plistlib
 from pathlib  import Path
 from datetime import datetime
 
+from ...patchsets import PatchType
+
 from ....datasets import os_data
 from ....support  import subprocess_wrapper
 
@@ -33,6 +35,8 @@ class KernelCacheSupport:
                 ["teamID"] =           Team ID (blank on ad-hoc signed)
             To grab the CDHash of a kext, run 'codesign -dvvv <kext_path>'
         """
+        if not kext_name.endswith(".kext"):
+            return False
 
         try:
             aux_cache_path = Path(self.mount_location_data) / Path("/private/var/db/KernelExtensionManagement/AuxKC/CurrentAuxKC/com.apple.kcgen.instructions.plist")
@@ -103,7 +107,6 @@ class KernelCacheSupport:
         return updated_install_location
 
 
-
     def clean_auxiliary_kc(self) -> None:
         """
         Clean the Auxiliary Kernel Collection
@@ -125,7 +128,7 @@ class KernelCacheSupport:
             for key in oclp_plist_data:
                 if isinstance(oclp_plist_data[key], (bool, int)):
                     continue
-                for install_type in ["Install", "Install Non-Root"]:
+                for install_type in [PatchType.OVERWRITE_SYSTEM_VOLUME, PatchType.OVERWRITE_DATA_VOLUME, PatchType.MERGE_SYSTEM_VOLUME, PatchType.MERGE_DATA_VOLUME]:
                     if install_type not in oclp_plist_data[key]:
                         continue
                     for location in oclp_plist_data[key][install_type]:
